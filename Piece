@@ -1,0 +1,46 @@
+import pygame
+from Constants import RED, GREY, SQUARE_SIZE, BLACK, SIZE_DELTA, WIDTH, HEIGHT
+
+WINDOW = pygame.display.set_mode((WIDTH, HEIGHT))
+
+
+class Piece:
+    PADDING = 12
+    OUTLINE = 2
+
+    def __init__(self, row, col, color):
+        self.row = row
+        self.col = col
+        self.color = color
+        self.king = False
+        if self.color == BLACK:
+            self.direction = -1
+            self.image = pygame.image.load("assets/Blue_circle.png")
+        else:
+            self.direction = 1
+            self.image = pygame.image.load("assets/White_circle.png")
+
+        self.x = 0
+        self.y = 0
+        self.calc_pos()
+
+    def calc_pos(self):
+        self.x = SQUARE_SIZE * self.col + SQUARE_SIZE//2 + 9.5
+        self.y = SQUARE_SIZE * self.row + SQUARE_SIZE//2 + 9.5
+
+    def make_king(self):
+        self.king = True
+
+    def draw(self, win):
+        #radius = SQUARE_SIZE//2 - self.PADDING
+        #pygame.draw.circle(win, GREY, (self.x, self.y), radius + self.OUTLINE)
+        #pygame.draw.circle(win, self.color, (self.x, self.y), radius)
+        WINDOW.blit(self.image, (self.x, self.y))
+
+    def move(self, row, col):
+        self.row = row
+        self.col = col
+        self.calc_pos()
+
+    def __repr__(self):
+        return str(self.color)
